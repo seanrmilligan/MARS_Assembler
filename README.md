@@ -3,6 +3,9 @@
 
 MARS has been jointly developed by [Pete Sanderson][4] (programming) and [Ken Vollmar][5] (details and paperwork).
 
+## Last update
+Aug. 2014
+
 ## Download
 You can download the latest version [at the official website][6].
 
