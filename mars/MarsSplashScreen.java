@@ -1,12 +1,23 @@
-   package mars;
-   import java.awt.*;
-   import javax.swing.*;
+package mars;
+
+import javafx.application.Preloader;
+import javafx.application.Preloader.StateChangeNotification.Type;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
 
 /*
-Copyright (c) 2003-2010,  Pete Sanderson and Kenneth Vollmar
+Copyright (c) 2016,  Sean Milligan
 
-Developed by Pete Sanderson (psanderson@otterbein.edu)
-and Kenneth Vollmar (kenvollmar@missouristate.edu)
+Developed by Sean Milligan (mars@seanrmilligan.com)
 
 Permission is hereby granted, free of charge, to any person obtaining 
 a copy of this software and associated documentation files (the 
@@ -35,84 +46,71 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * Adapted from http://www.java-tips.org/content/view/1267/2/<br>
  */
 
-    public class MarsSplashScreen extends JWindow {
-      
-      private int duration;
-      
-       public MarsSplashScreen(int d) {
-         duration = d;
-      }
-      
-      /**
-   	 * A simple little method to show a title screen in the center
-       * of the screen for the amount of time given in the constructor
-   	 */
-       public void showSplash() {
-         ImageBackgroundPanel content = new ImageBackgroundPanel();
-			this.setContentPane(content);
-         
-         // Set the window's bounds, centering the window
-			// Wee bit of a hack.  I've hardcoded the image dimensions of 
-			// MarsSurfacePathfinder.jpg, because obtaining them via
-			// getHeight() and getWidth() is not trival -- it is possible
-			// that at the time of the call the image has not completed
-			// loading so the Image object doesn't know how big it is.
-			// So observers are involved -- see the API.
-         int width = 390;
-         int height =215;
-         Toolkit tk = Toolkit.getDefaultToolkit();
-         Dimension screen = tk.getScreenSize();
-         int x = (screen.width-width)/2;
-         int y = (screen.height-height)/2;
-         setBounds(x,y,width,height);
-         
-         // Build the splash screen
-         JLabel title = new JLabel("MARS: Mips Assembler and Runtime Simulator", JLabel.CENTER);      
-         JLabel copyrt1 = new JLabel
-               ("<html><br><br>Version "+Globals.version+" Copyright (c) "+Globals.copyrightYears+"</html>", JLabel.CENTER);
-         JLabel copyrt2 = new JLabel
-               ("<html><br><br>"+Globals.copyrightHolders+"</html>", JLabel.CENTER);
-         title.setFont(new Font("Sans-Serif", Font.BOLD, 16));
-         title.setForeground(Color.black);
-         copyrt1.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-         copyrt2.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-         copyrt1.setForeground(Color.white);
-         copyrt2.setForeground(Color.white);
+public class MarsSplashScreen extends Preloader {
+	
+	private static final int splashDuration = 2000; // time in MS to show splash screen
 
-			content.add(title,BorderLayout.NORTH);
-			content.add(copyrt1,BorderLayout.CENTER);
-			content.add(copyrt2,BorderLayout.SOUTH);
+	private static int imageHeight = 215;
+	private static int imageWidth = 390;
+	
+	private Stage preloaderStage;
+	private BorderPane splashPane;
+	private BackgroundImage backroundImage;
+	private Label title;
+	private Label copyrightVersionAndDate;
+	private Label copyrightHolders;
+	
+	private long startTimeMilliseconds;
 
-         // Display it
-         setVisible(true);
-         // Wait a little while, maybe while loading resources
-         try { Thread.sleep(duration); } 
-             catch (Exception e) {}
-         setVisible(false);
-      }
-   	
-       class ImageBackgroundPanel extends JPanel
-      {
-         Image image;
-          public ImageBackgroundPanel()
-         {
-            try
-            {
-				   image = new ImageIcon(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Globals.imagesPath+"MarsSurfacePathfinder.jpg"))).getImage();
-            }
-                catch (Exception e) {System.out.println(e); /*handled in paintComponent()*/ }
-         }
-      
-          @Override
-          protected void paintComponent(Graphics g)
-         {
-            super.paintComponent(g); 
-            if (image != null)
-               g.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
-         }
-      }
-   
-   
-   
-      
-   }
+	@Override
+	public void init() {
+		this.splashPane = new BorderPane();
+		this.splashPane.setMinHeight(MarsSplashScreen.imageHeight);
+		this.splashPane.setMinWidth(MarsSplashScreen.imageWidth);
+		
+		this.backroundImage = new BackgroundImage(
+			new Image(Globals.imagesPath + "MarsSurfacePathfinder.jpg", MarsSplashScreen.imageWidth, MarsSplashScreen.imageHeight, true, false),
+			BackgroundRepeat.NO_REPEAT,
+			BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER,
+			new BackgroundSize(MarsSplashScreen.imageWidth, MarsSplashScreen.imageHeight, false, false, false, false)
+		);
+		
+		this.title = new Label("MARS: Mips Assembler and Runtime Simulator");
+		this.copyrightVersionAndDate = new Label(Globals.version + " Copyright (c) " + Globals.copyrightYears);
+		this.copyrightHolders = new Label(Globals.copyrightHolders);
+		
+		this.splashPane.setTop(this.title);
+		this.splashPane.setCenter(this.copyrightVersionAndDate);
+		this.splashPane.setBottom(this.copyrightHolders);
+		this.splashPane.setBackground(new Background(this.backroundImage));
+	}
+
+	public void start(Stage primaryStage) {
+		this.preloaderStage = primaryStage;
+		
+		this.preloaderStage.setScene(new Scene(this.splashPane));
+		this.preloaderStage.show();
+		this.preloaderStage.centerOnScreen();
+		this.startTimeMilliseconds = System.currentTimeMillis();
+	}
+	
+	@Override
+	public void handleStateChangeNotification(StateChangeNotification stateChangeNotification) {
+		if (stateChangeNotification.getType() == Type.BEFORE_START) {
+			long currentTimeMilliseconds = System.currentTimeMillis();
+			
+			while(currentTimeMilliseconds - this.startTimeMilliseconds < MarsSplashScreen.splashDuration) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					
+				}
+				
+				currentTimeMilliseconds = System.currentTimeMillis();
+			}
+			
+			this.preloaderStage.hide();
+		}
+	}
+}
