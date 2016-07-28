@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mars.controller.MainUIController">
+   <top>
+      <VBox>
+         <children>
+            <MenuBar BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem text="_New">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem text="_Open ...">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem text="_Close">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem text="C_lose All" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem text="_Save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem text="S_ave as ..." />
+                        <MenuItem text="Sa_ve All" />
+                        <MenuItem text="_Dump Memory ...">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Run">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Settings">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Tools">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <Slider />
+                <Button mnemonicParsing="false" text="Button" />
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Edit">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea layoutX="164.0" layoutY="118.0" prefHeight="506.0" prefWidth="966.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <HBox prefHeight="706.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Execute">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="120.0" layoutY="153.0" prefHeight="706.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <bottom>
+                              <TabPane prefHeight="200.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                <tabs>
+                                  <Tab text="Mars Messages">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="433.0">
+                                             <children>
+                                                <ToolBar layoutX="64.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                  <items>
+                                                    <Button mnemonicParsing="false" text="Clear" />
+                                                      <Button mnemonicParsing="false" text="Pop out" />
+                                                  </items>
+                                                </ToolBar>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                  <Tab text="Run I/O">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <ToolBar prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                  <items>
+                                                    <Button mnemonicParsing="false" text="Clear" />
+                                                      <Button mnemonicParsing="false" text="Pop out" />
+                                                  </items>
+                                                </ToolBar>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </bottom>
+                           <right>
+                              <Accordion BorderPane.alignment="CENTER">
+                                <panes>
+                                  <TitledPane animated="false" text="Registers">
+                                       <content>
+                                          <TableView prefHeight="499.0" prefWidth="232.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="Name" />
+                                              <TableColumn prefWidth="75.0" text="Number" />
+                                                <TableColumn prefWidth="75.0" text="Value" />
+                                            </columns>
+                                          </TableView>
+                                       </content>
+                                    </TitledPane>
+                                  <TitledPane animated="false" text="Coproc 0">
+                                       <content>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="C1" />
+                                              <TableColumn prefWidth="75.0" text="C2" />
+                                            </columns>
+                                          </TableView>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane prefHeight="200.0" prefWidth="200.0" text="Coproc 1">
+                                       <content>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="Name" />
+                                              <TableColumn prefWidth="75.0" text="Float" />
+                                                <TableColumn prefWidth="75.0" text="Double" />
+                                            </columns>
+                                          </TableView>
+                                       </content>
+                                    </TitledPane>
+                                </panes>
+                              </Accordion>
+                           </right>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

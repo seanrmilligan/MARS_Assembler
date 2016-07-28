@@ -130,7 +130,7 @@ public class MarsLaunch {
 		Globals.initialize(usingGUI);
 
 		if (usingGUI) {
-			this.launchIDE();
+			this.launchIDE(args);
 		} else { // running from command line.
 			// assure command mode works in headless environment (generates exception if not)
 			System.setProperty("java.awt.headless", "true");
@@ -229,8 +229,8 @@ public class MarsLaunch {
 	// There are no command arguments, so run in interactive mode by
 	// launching the GUI-fronted integrated development environment.
 
-	private void launchIDE() {
-		LauncherImpl.launchApplication(JupiterUI.class, MarsSplashScreen.class, new String[]{});
+	private void launchIDE(String[] args) {
+		LauncherImpl.launchApplication(JupiterUI.class, MarsSplashScreen.class, args);
 	}
 
 
